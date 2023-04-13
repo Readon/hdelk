@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>HDElk Bare Bones Example</h1>
+
+<script src="js/elk.bundled.js"></script>
+<script src="js/svg.min.js"></script>
+<script src="js/hdelk.js"></script>
+
+<div id="simple_diagram"></div>
+
+<script type="text/javascript">
+
+    var simple_graph = {
+        properties: {
+            "org.eclipse.elk.algorithm": "layered",
+            "org.eclipse.elk.edgeRouting": "ORTHOGONAL",
+            // "org.eclipse.elk.insideSelfLoops.activate": 'true',
+        },
+        children: [{
+            id: "complex",
+            inPorts: [{id: "in", properties:{index:0}}],
+            outPorts: [{id: "out", properties:{index:1}}],
+            properties: {
+                "org.eclipse.elk.portConstraints": "FIXED_ORDER",
+                "org.eclipse.elk.insideSelfLoops.activate": 'true',
+            }, 
+            children: [
+            ],
+            edges: [
+                {route:["complex.in", "complex.out"]},
+            ]
+        }]
+    }
+
+    hdelk.layout( simple_graph, "simple_diagram" );
+</script>
+
+</body>
+</html>

@@ -138,7 +138,7 @@ var hdelk = (function(){
 
         if ( !child.layoutOptions['elk.nodeSize.options'] ) {
            child.layoutOptions['elk.nodeSize.options'] = '(' + node_min_width + ',' + node_min_height + ')';
-       }
+        }
 /*
         if ( !child.layoutOptions[ 'elk.layered.nodePlacement.networkSimplex.nodeFlexibility.default' ] ) {
             child.layoutOptions[ 'elk.layered.nodePlacement.networkSimplex.nodeFlexibility.default' ] = "PORT_POSITION NODE_SIZE";
@@ -154,6 +154,11 @@ var hdelk = (function(){
 
         if ( !child.label && child.label != "" )
             child.label = child.id
+
+        // var properties = {}
+        // if (child.properties)
+        //     child.layoutOptions = child.properties;
+            // properties = child.properties;
 
         if ( child.port ) {
             // if ( !child.height )

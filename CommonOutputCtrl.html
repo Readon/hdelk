@@ -1,0 +1,128 @@
+<div id="diagram"></div>
+<a id="load" onclick="loadJson()" href="javascript:void(0);">load</a>
+<a id="save" onclick="saveHDElkSvg()" href="javascript:void(0);">save</a>
+
+<script src="js/elk.bundled.js"></script>
+<script src="js/svg.min.js"></script>
+<script src="js/hdelk.js"></script>
+<script src="js/FileSaver.js"></script>
+
+<script type="text/javascript">
+    var svgId = "diagram";
+    var dataStyle = 1;
+    var cmdStyle = 1;
+    var outClkStyle = 4;
+
+    window.onload = function () {
+        var a = document.getElementById("save");
+        a.onclick = function () {
+            saveHDElkSvg();
+            return false;
+        }
+        var b = document.getElementById("load");
+        b.onclick = function () {
+            loadJson();
+            return false;
+        }
+    }
+
+    const getCurrentFile = () => {
+        let url = window.location.href;
+        let objs = url.split("/");
+        return (objs[objs.length - 1]);
+    }
+
+    var saveHDElkSvg = function () {
+        var snippetElement = document.getElementById(svgId);
+        var snippetText = snippetElement.innerHTML;
+        var blob = new Blob([snippetText], { type: "text/plain;charset=utf-8" });
+        var filename = getCurrentFile()
+        var nosuffix = filename.split(".")
+        saveAs(blob, nosuffix[0] + ".svg");
+    }
+
+    // var mygraph = {
+    //     children: [
+    //         {
+    //             id: "通用输出控制器",
+    //             type: "lib.OutputCtrl",
+    //             inPorts: ["input", "trigger"],
+    //             outPorts: ["output"],
+    //             highlight: 1,
+    //             children: [
+    //                 {
+    //                     id: "数据缓存",
+    //                     type: "StreamFifo",
+    //                     inPorts: ["push"],
+    //                     outPorts: ["pop"],
+    //                     highlight: dataStyle,
+    //                 },
+    //                 {
+    //                     id: "跨域数据缓存",
+    //                     type: "StreamFifoCC",
+    //                     inPorts: ["push"],
+    //                     outPorts: ["pop"],
+    //                     highlight: dataStyle,
+    //                 },
+    //                 {
+    //                     id: "数据开关",
+    //                     northPorts: ["on"],
+    //                     inPorts: ["input"],
+    //                     outPorts: ["output"],
+    //                     highlight: outClkStyle,
+    //                 },
+    //                 {
+    //                     id: "输出使能逻辑",
+    //                     inPorts: ["isFull", "trigger"],
+    //                     outPorts: ["enable"],
+    //                     highlight: outClkStyle,
+    //                 },
+    //             ],
+    //             edges: [
+    //                 {
+    //                     sources: ["数据缓存.push"],
+    //                     targets: ["输出使能逻辑.isFull"],
+    //                     highlight: outClkStyle,
+    //                     label: "ready",
+    //                 },
+    //                 {
+    //                     sources: ["通用输出控制器.input"],
+    //                     targets: ["数据缓存.push"],
+    //                     highlight: dataStyle,
+    //                     bus: 1
+    //                 },
+    //                 {
+    //                     sources: ["数据缓存.pop"],
+    //                     targets: ["跨域数据缓存.push"],
+    //                     highlight: dataStyle,
+    //                     bus: 1
+    //                 },
+    //                 {
+    //                     sources: ["跨域数据缓存.pop"],
+    //                     targets: ["数据开关.input"],
+    //                     highlight: outClkStyle,
+    //                     bus: 1
+    //                 },
+    //                 {
+    //                     sources: ["数据开关.output"],
+    //                     targets: ["通用输出控制器.output"],
+    //                     bus: 1,
+    //                     highlight: outClkStyle,
+    //                 },
+    //                 {
+    //                     sources: ["通用输出控制器.trigger"],
+    //                     targets: ["输出使能逻辑.trigger"],
+    //                     highlight: outClkStyle,
+    //                 },
+    //                 {
+    //                     sources: ["输出使能逻辑.enable"],
+    //                     targets: ["数据开关.on"],
+    //                     highlight: outClkStyle,
+    //                 },
+    //             ]
+    //         },
+    //     ],
+    // }
+
+    hdelk.layout(mygraph, svgId);
+</script>
